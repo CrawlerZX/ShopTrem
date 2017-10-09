@@ -11,13 +11,15 @@ public class Menu extends Thread {
     Sprite backGround;
     Keyboard keyboard;
     int opcaoEscolhida = 0;
-    Sound musica;
-    ImageIcon img;
+//    Sound efeito;
+    static ImageIcon img;
 
     public Menu(){
 
-        backGround = new Sprite(Utilities.getImgCenario("UI menu full 720p.png"), 4);
+        backGround = new Sprite(Utilities.getImgCenario("menu.png"), 4);
         keyboard = Game.janela.getKeyboard();
+
+//        efeito = new Sound(Utilities.getFileAudio("menu_efeito.wav"));
 
         keyboard.setBehavior(Keyboard.UP_KEY,   Keyboard.DETECT_INITIAL_PRESS_ONLY);
         keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
@@ -25,11 +27,15 @@ public class Menu extends Thread {
 
     public void run(){
 
+
         this.printar();
 
     }
 
     private void verificaOpcao(){
+
+        Sound efeito = new Sound(Utilities.getFileAudio("menu_efeito.wav"));
+        efeito.setVolume(0.0001f);
 
         if(keyboard.keyDown(Keyboard.UP_KEY)){
             if(opcaoEscolhida == 0){
@@ -38,6 +44,9 @@ public class Menu extends Thread {
             else {
                 this.opcaoEscolhida--;
             }
+
+            efeito.play();
+
         }
         else if (keyboard.keyDown(Keyboard.DOWN_KEY)) {
 
@@ -47,7 +56,11 @@ public class Menu extends Thread {
             else {
                 opcaoEscolhida++;
             }
+
+            efeito.play();
         }
+
+        efeito = null;
     }
 
     private void desenhar()

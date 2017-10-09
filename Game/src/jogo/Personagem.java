@@ -2,6 +2,8 @@ package jogo;
 
 import jplay.Keyboard;
 
+import javax.swing.*;
+
 public class Personagem extends ObjectGame implements Runnable {
 
     private String nome;
@@ -19,8 +21,8 @@ public class Personagem extends ObjectGame implements Runnable {
         this.isFree = true;
         this.setSequence(0, 7);
         this.setTotalDuration(5000);
-        this.x = 50;
-        this.y = 450;
+        this.x = 350;
+        this.y = 300;
     }
 
     @Override
@@ -29,44 +31,42 @@ public class Personagem extends ObjectGame implements Runnable {
             this.setIsThreadRun(true);
 
             while(true) {
-                if(Game.teclado.keyDown(Keyboard.LEFT_KEY)) {
-                    this.x -= this.getVelocidade();
-                    if(Game.teclado.keyDown(Keyboard.UP_KEY)) {
-                        this.y -= this.getVelocidade();
-                        this.setDirection(Position.LEFT_UP);
-                    }
-                    else if(Game.teclado.keyDown(Keyboard.DOWN_KEY)) {
-                        this.y += this.getVelocidade();
-                        this.setDirection(Position.LEFT_DOWN);
-                    }
-                    else {
+                if(Game.teclado.keyDown(Game.A)) {
+
+                    if(this.x <= 0 ){
+
+                        Thread.sleep(500);
+
+                        Game.fase.atual = Game.fase.atual - 1;
+
+                        this.x = Game.janela.getWidth() - this.width;
+
+                        Thread.sleep(500);
+
+                    }else {
+                        this.x -= this.getVelocidade();
                         this.setDirection(Position.LEFT);
                     }
+
                     this.update();
                 }
-                else if(Game.teclado.keyDown(Keyboard.RIGHT_KEY)) {
-                    this.x += this.getVelocidade();
-                    if(Game.teclado.keyDown(Keyboard.UP_KEY)) {
-                        this.y -= this.getVelocidade();
-                        this.setDirection(Position.RIGHT_UP);
-                    }
-                    else if(Game.teclado.keyDown(Keyboard.DOWN_KEY)) {
-                        this.y += this.getVelocidade();
-                        this.setDirection(Position.RIGHT_DOWN);
-                    }
-                    else {
+                else if(Game.teclado.keyDown(Game.D)) {
+
+                    if(this.x >= Game.janela.getWidth() - this.width){
+
+                        Thread.sleep(500);
+
+                        Game.fase.atual = Game.fase.atual + 1;
+
+                        this.x = 0;
+
+                        Thread.sleep(500);
+
+                    }else {
+                        this.x += this.getVelocidade();
                         this.setDirection(Position.RIGHT);
                     }
-                    this.update();
-                }
-                else if(Game.teclado.keyDown(Keyboard.UP_KEY)) {
-                    this.y -= this.getVelocidade();
-                    this.setDirection(Position.UP);
-                    this.update();
-                }
-                else if (Game.teclado.keyDown(Keyboard.DOWN_KEY)) {
-                    this.y += this.getVelocidade();
-                    this.setDirection(Position.DOWN);
+
                     this.update();
                 }
 
