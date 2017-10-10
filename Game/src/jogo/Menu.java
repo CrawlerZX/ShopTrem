@@ -1,6 +1,7 @@
 package jogo;
 
 import jplay.Keyboard;
+import jplay.Parallax;
 import jplay.Sound;
 import jplay.Sprite;
 
@@ -11,15 +12,15 @@ public class Menu extends Thread {
     Sprite backGround;
     Keyboard keyboard;
     int opcaoEscolhida = 0;
-//    Sound efeito;
-    static ImageIcon img;
+    public static Parallax parallax;
 
     public Menu(){
 
-        backGround = new Sprite(Utilities.getImgCenario("menu.png"), 4);
-        keyboard = Game.janela.getKeyboard();
+        parallax = new Parallax();
+        parallax.add(Utilities.getImgCenario("menu\\fundo.png"));
 
-//        efeito = new Sound(Utilities.getFileAudio("menu_efeito.wav"));
+        backGround = new Sprite(Utilities.getImgCenario("menu\\menu.png"), 4);
+        keyboard = Game.janela.getKeyboard();
 
         keyboard.setBehavior(Keyboard.UP_KEY,   Keyboard.DETECT_INITIAL_PRESS_ONLY);
         keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
@@ -59,12 +60,15 @@ public class Menu extends Thread {
 
             efeito.play();
         }
-
-        efeito = null;
     }
 
     private void desenhar()
     {
+        parallax.drawLayers();
+        parallax.repeatLayers(Game.janela.getWidth(), Game.janela.getHeight(), true);
+        parallax.setVelLayerX(1, parallax.getLayer(0));
+        parallax.moveLayersStandardX(false);
+
         this.backGround.setCurrFrame(opcaoEscolhida);
         backGround.draw();
         Game.janela.update();

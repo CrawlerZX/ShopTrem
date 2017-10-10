@@ -65,21 +65,13 @@ public class Game {
             parallax.setVelLayerX(3, parallax.getLayer(0));
             parallax.moveLayersStandardX(true);
 
-//            trilho.draw();
-//            motor.draw();
-//            chao.draw();
-//            parede_in.draw();
-//            person.draw();
-//            parede_ex.draw();
-
             fase.draw();
-
 
             if(!person.getIsThreadRun()) {
                 Thread th = new Thread(person);
                 th.start();
             }
-//
+
 //            if(!guarda.isRun) {
 //                guarda.isRun = true;
 //                Thread th = new Thread(guarda);
