@@ -12,14 +12,15 @@ public class Guarda extends ObjectGame implements Runnable {
 
     public Guarda(String fileName, int numFrames, double velocidade) {
         super(fileName, numFrames, velocidade);
-        this.x = 250;
-        this.y = 450;
+        this.x = 400;
+        this.y = 330;
         this.rayVision = 200;
         this.dirVision = 1;
     }
 
     @Override
     public void run() {
+        this.setIsThreadRun(true);
 
         while (true){
             FindTarget();

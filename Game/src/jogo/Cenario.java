@@ -14,6 +14,8 @@ public class Cenario {
 
     public Sprite parede_ex;
 
+    public Sprite trem;
+
     public Cenario(Sprite  motor, Sprite trilho, Sprite chao, Sprite parede_in, Sprite parede_ex){
 
         this.motor = motor;
@@ -24,8 +26,10 @@ public class Cenario {
 
     }
 
+    public Cenario(Sprite trem, Sprite parede_ex){
 
+        this.trem = trem;
+        this.parede_ex = parede_ex;
 
-
-
+    }
 }

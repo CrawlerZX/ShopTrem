@@ -34,7 +34,7 @@ public abstract class ObjectGame extends Sprite implements Runnable {
     protected void setDirection(int pos){
         if(this.direction != pos){
             this.direction = pos;
-            this.setSequence(pos, pos + 8);
+            this.setSequence(pos, pos + 3);
         }
     }
 }

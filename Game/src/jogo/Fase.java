@@ -17,11 +17,13 @@ public class Fase {
 
         Cenario cena = cenarios.get(atual);
 
-        cena.trilho.draw();
-        cena.motor.draw();
-        cena.chao.draw();
-        cena.parede_in.draw();
+//        cena.trilho.draw();
+//        cena.motor.draw();
+//        cena.chao.draw();
+//        cena.parede_in.draw();
+        cena.trem.draw();
         Game.person.draw();
+        Game.guarda.draw();
         cena.parede_ex.draw();
     }
 }

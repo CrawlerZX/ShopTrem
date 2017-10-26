@@ -19,10 +19,10 @@ public class Personagem extends ObjectGame implements Runnable {
         this.mochila = null;
         this.isHide = false;
         this.isFree = true;
-        this.setSequence(0, 7);
-        this.setTotalDuration(5000);
-        this.x = 350;
-        this.y = 300;
+        this.setSequence(0, 3);
+        this.setTotalDuration(500);
+        this.x = 500;
+        this.y = 330;
     }
 
     @Override
