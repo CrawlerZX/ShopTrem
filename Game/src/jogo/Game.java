@@ -10,6 +10,7 @@ public class Game {
 
     public static Personagem person;
     public static Guarda guarda;
+    public static Sprite cliente;
     public static Window janela;
     public static Keyboard teclado;
     public static Point target;
@@ -28,6 +29,12 @@ public class Game {
 
         guarda = new Guarda(Utilities.getImgSprite("sprite_sheet_person.png"), 64, 1);
 
+        cliente = new Sprite(Utilities.getImgSprite("cliente.png"), 2);
+        cliente.setTotalDuration(2000);
+        cliente.setLoop(true);
+        cliente.setX(1190);
+        cliente.setY(320);
+
         janela = new Window(1280, 720);
 
         Parallax parallax = new Parallax();
@@ -42,7 +49,7 @@ public class Game {
 
         Sound musica = new Sound(Utilities.getFileAudio("menu_fundo.wav"));
         musica.setRepeat(true);
-        musica.play();
+//        musica.play();
 
         Menu menu = new Menu();
         menu.start();
@@ -52,12 +59,15 @@ public class Game {
 
         som = new Sound(Utilities.getFileAudio("fundo.wav"));
         som.setRepeat(true);
-        som.play();
+//        som.play();
 
         teclado.setBehavior(Game.A,   Keyboard.DETECT_EVERY_PRESS);
         teclado.setBehavior(Game.D,   Keyboard.DETECT_EVERY_PRESS);
 
         teclado.setBehavior(Keyboard.SPACE_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
+
+        Sprite anim_porta = new Sprite(Utilities.getImgCenario("fase1\\porta_trem_sprite_sheet.png"), 6);
+        anim_porta.setTotalDuration(500);
 
         while(true) {
 
@@ -67,7 +77,11 @@ public class Game {
             parallax.setVelLayerX(8, parallax.getLayer(1));
             parallax.moveLayersStandardX(true);
 
-            fase.draw();
+            //cliente.update();
+            //fase.draw();
+
+            anim_porta.update();
+            anim_porta.draw();
 
             if(!person.getIsThreadRun()) {
                 Thread th = new Thread(person);

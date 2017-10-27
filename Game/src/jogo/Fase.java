@@ -22,6 +22,7 @@ public class Fase {
 //        cena.chao.draw();
 //        cena.parede_in.draw();
         cena.trem.draw();
+        Game.cliente.draw();
         Game.person.draw();
         Game.guarda.draw();
         cena.parede_ex.draw();

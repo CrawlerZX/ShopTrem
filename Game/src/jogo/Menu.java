@@ -46,7 +46,7 @@ public class Menu extends Thread {
                 this.opcaoEscolhida--;
             }
 
-            efeito.play();
+//            efeito.play();
 
         }
         else if (keyboard.keyDown(Keyboard.DOWN_KEY)) {
@@ -58,7 +58,7 @@ public class Menu extends Thread {
                 opcaoEscolhida++;
             }
 
-            efeito.play();
+//            efeito.play();
         }
     }
 
