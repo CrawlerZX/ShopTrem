@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class Guarda extends ObjectGame implements Runnable {
 
+    private int sleepTransition;
+    private int threadSleep;
     private double rayVision;
     private int dirVision;
     private Personagem target;
@@ -12,10 +14,18 @@ public class Guarda extends ObjectGame implements Runnable {
 
     public Guarda(String fileName, int numFrames, double velocidade) {
         super(fileName, numFrames, velocidade);
-        this.x = 400;
-        this.y = 330;
-        this.rayVision = 200;
+
+        this.x = Game.config.getGuarda_init_x();
+        this.y = Game.config.getGuarda_init_y();
+
+        this.rayVision = Game.config.getGuarda_rayvision();
         this.dirVision = 1;
+
+        this.sleepTransition = Game.config.getGame_thread_sleep_transition();
+        this.threadSleep = Game.config.getGame_thread_sleep();
+
+        this.setTotalDuration(Game.config.getGuarda_anim_duration());
+        this.setSequence(0, 3);
     }
 
     @Override
@@ -55,20 +65,27 @@ public class Guarda extends ObjectGame implements Runnable {
             while(this.targetIsTrigered) {
                 if(Game.getPositionTarget().x > this.x) {
                     this.x += this.getVelocidade();
+                    this.setDirection(Position.RIGHT);
                 }
                 else if (Game.getPositionTarget().x < this.x) {
                     this.x -= this.getVelocidade();
+                    this.setDirection(Position.LEFT);
+                }
+                else if (Game.getPositionTarget().x == this.x){
+
+//                    this.stop();
                 }
 
-                if(Game.getPositionTarget().y > this.y) {
-                    this.y += this.getVelocidade();
-                }
-                else if (Game.getPositionTarget().y < this.y) {
-                    this.y -= this.getVelocidade();
-                }
+//                if(Game.getPositionTarget().y > this.y) {
+//                    this.y += this.getVelocidade();
+//                }
+//                else if (Game.getPositionTarget().y < this.y) {
+//                    this.y -= this.getVelocidade();
+//                }
 
+                this.update();
                 FindTarget();
-                Thread.currentThread().sleep(10);
+                Thread.currentThread().sleep(this.threadSleep);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,8 +97,8 @@ public class Guarda extends ObjectGame implements Runnable {
         Point personLocation = Game.getPositionTarget();
         double distancia = personLocation.distance(this.x, this.y);
 
-        System.out.println("Guarda: " + this.x + " " + this.y);
-        System.out.println("Personagem: " + personLocation.x + " " + personLocation.y);
+//        System.out.println("Guarda: " + this.x + " " + this.y);
+//        System.out.println("Personagem: " + personLocation.x + " " + personLocation.y);
 
         //Olhando para a esquerda
         if (this.dirVision == 0){

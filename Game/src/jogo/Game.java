@@ -3,95 +3,80 @@ package jogo;
 import java.awt.*;
 import java.util.ArrayList;
 
+import jogo.DAO.ConfigDAL;
+import jogo.DAO.ConfigModel;
 import jplay.*;
 import jplay.Window;
 
 public class Game {
 
+    public static ConfigModel config;
+
     public static Personagem person;
     public static Guarda guarda;
+    public static Parallax parallax;
+
+    public static Sound musicaMenu;
+    public static Menu menu;
+
     public static Sprite cliente;
     public static Window janela;
     public static Keyboard teclado;
     public static Point target;
-    public static Sound som;
+    public static Sound somFase;
 
     public static Fase fase;
 
     public static final int A = 65;
     public static final int D = 68;
+    public static final int W = 87;
+    public static final int S = 83;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws Exception {
 
-        target = new Point();
-
-        person = new Personagem(Utilities.getImgSprite("sprite_sheet_person.png"), 8, 3.5);
-
-        guarda = new Guarda(Utilities.getImgSprite("sprite_sheet_person.png"), 64, 1);
-
-        cliente = new Sprite(Utilities.getImgSprite("cliente.png"), 2);
-        cliente.setTotalDuration(2000);
-        cliente.setLoop(true);
-        cliente.setX(1190);
-        cliente.setY(320);
-
-        janela = new Window(1280, 720);
-
-        Parallax parallax = new Parallax();
-        parallax.add(Utilities.getImgCenario("fase1\\fundo.png"));
-        parallax.add(Utilities.getImgCenario("fase1\\trilho.png"));
-
+        config = ConfigDAL.getConfig();
+        ApplyConfig();
         carregaFase();
 
-        teclado = janela.getKeyboard();
-        teclado.addKey(Game.A);
-        teclado.addKey(Game.D);
+        Intro intro = new Intro(janela);
+        intro.start();
+        intro.join();
 
-        Sound musica = new Sound(Utilities.getFileAudio("menu_fundo.wav"));
-        musica.setRepeat(true);
-//        musica.play();
-
-        Menu menu = new Menu();
+//        musicaMenu.play();
         menu.start();
         menu.join();
+//        musicaMenu.stop();
 
-        musica.stop();
-
-        som = new Sound(Utilities.getFileAudio("fundo.wav"));
-        som.setRepeat(true);
-//        som.play();
-
-        teclado.setBehavior(Game.A,   Keyboard.DETECT_EVERY_PRESS);
-        teclado.setBehavior(Game.D,   Keyboard.DETECT_EVERY_PRESS);
-
-        teclado.setBehavior(Keyboard.SPACE_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
-
-        Sprite anim_porta = new Sprite(Utilities.getImgCenario("fase1\\porta_trem_sprite_sheet.png"), 6);
-        anim_porta.setTotalDuration(500);
+//        somFase.play();
+        Parallax tst = new Parallax();
+        tst.add(Utilities.getImgCenario("fase1\\poste.png"));
 
         while(true) {
 
             parallax.drawLayers();
             parallax.repeatLayers(janela.getWidth(), janela.getHeight(), true);
-            parallax.setVelLayerX(8, parallax.getLayer(0));
-            parallax.setVelLayerX(8, parallax.getLayer(1));
+            parallax.setVelLayerX(20, parallax.getLayer(0));
+            parallax.setVelLayerX(20, parallax.getLayer(1));
             parallax.moveLayersStandardX(true);
 
-            //cliente.update();
-            //fase.draw();
+            cliente.update();
+            fase.draw();
 
-            anim_porta.update();
-            anim_porta.draw();
+            tst.drawLayers();
+            tst.repeatLayers(janela.getWidth(), janela.getHeight(), true);
+            tst.setVelLayerX(8, tst.getLayer(0));
+            tst.moveLayersStandardX(true);
 
             if(!person.getIsThreadRun()) {
                 Thread th = new Thread(person);
                 th.start();
             }
 
-            if(!guarda.getIsThreadRun()) {
-                Thread th = new Thread(guarda);
-                th.start();
-            }
+//            if(!guarda.getIsThreadRun()) {
+//                Thread th = new Thread(guarda);
+//                th.start();
+//            }
+
 
             if(teclado.keyDown(Keyboard.ENTER_KEY)) {
                 System.exit(1000);
@@ -101,6 +86,46 @@ public class Game {
         }
     }
 
+    private static void ApplyConfig() {
+
+        Game.person = new Personagem(config.getPerson_dir_img(), config.getPerson_num_frame(), config.getPerson_vel());
+        Game.guarda = new Guarda(config.getGuarda_dir_img(), config.getGuarda_num_frame(), config.getGuarda_vel());
+
+        Game.janela = new Window(config.getGame_janela_w(), config.getGame_janela_h());
+
+        cliente = new Sprite(Utilities.getImgSprite("cliente.png"), 2);
+        cliente.setTotalDuration(5000);
+        cliente.setLoop(true);
+        cliente.setX(1190);
+        cliente.setY(320);
+
+        parallax = new Parallax();
+        parallax.add(Utilities.getImgCenario("fase1\\fundo.png"));
+        parallax.add(Utilities.getImgCenario("fase1\\trilho.png"));
+
+        teclado = janela.getKeyboard();
+        teclado.addKey(Game.A);
+        teclado.addKey(Game.D);
+        teclado.addKey(Game.W);
+        teclado.addKey(Game.S);
+
+        musicaMenu = new Sound(Utilities.getFileAudio("menu_fundo.wav"));
+        musicaMenu.setRepeat(true);
+
+        menu = new Menu();
+
+        somFase = new Sound(Utilities.getFileAudio("fundo.wav"));
+        somFase.setRepeat(true);
+
+        teclado.setBehavior(Game.A,   Keyboard.DETECT_EVERY_PRESS);
+        teclado.setBehavior(Game.D,   Keyboard.DETECT_EVERY_PRESS);
+        teclado.setBehavior(Game.W,   Keyboard.DETECT_INITIAL_PRESS_ONLY);
+        teclado.setBehavior(Game.S,   Keyboard.DETECT_INITIAL_PRESS_ONLY);
+
+        teclado.setBehavior(Keyboard.SPACE_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
+
+        target = new Point();
+    }
 
     public static void setPositionTarget(double posicaoXDoPersonagem, double posicaoYDoPersonagem){
         Game.target.setLocation(posicaoXDoPersonagem, posicaoYDoPersonagem);

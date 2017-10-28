@@ -52,4 +52,18 @@ public class Utilities {
         return path;
 
     }
+
+    public static String getConfigPath() {
+
+        String path = System.getProperty("user.dir") + "\\src\\jogo\\config\\game.config.txt";
+
+        File file = new File(path);
+        if (!file.exists()){
+            throw new IllegalArgumentException("Arquivo não encontrado");
+        }
+
+        return path;
+
+    }
+
 }

@@ -1,5 +1,10 @@
 package jogo.DAO;
 
+import jogo.Utilities;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -9,16 +14,45 @@ public class Conn {
 
     public static String status = "Não conectou...";
 
-    private static final String USUARIO = "root";
-    private static final String SENHA = "root";
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/game";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+//    private static final String USUARIO = "root";
+//    private static final String SENHA = "root";
+//    private static final String URL = "jdbc:mysql://127.0.0.1:3306/game";
+//    private static final String DRIVER = "com.mysql.jdbc.Driver";
 
-    public Conn() {
+    private static String USUARIO;
+    private static String SENHA;
+    private static String URL;
+    private static String DRIVER;
+
+    private static void LoadInfo() throws Exception {
+
+        String[] tmp = new String[4];
+        BufferedReader br = new BufferedReader(new FileReader(Utilities.getConfigPath()));
+        try {
+            int i = 0;
+            while(br.ready()){
+                String[] linha = br.readLine().split("=");
+                tmp[i] = linha[1].trim();
+                i++;
+            }
+        }
+        catch (Exception ex){
+            throw new Exception(ex.getMessage() + " " + ex.getStackTrace());
+        }
+        finally {
+            br.close();
+        }
+
+        USUARIO = tmp[0];
+        SENHA = tmp[1];
+        URL = tmp[2];
+        DRIVER = tmp[3];
 
     }
 
-    public static java.sql.Connection getConexao() {
+    public static java.sql.Connection getConexao() throws Exception {
+
+        LoadInfo();
 
         Connection connection = null;
 
@@ -58,10 +92,13 @@ public class Conn {
             return true;
         } catch (SQLException e) {
             return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public static java.sql.Connection ReiniciarConexao() {
+    public static java.sql.Connection ReiniciarConexao() throws Exception {
         FecharConexao();
         return Conn.getConexao();
     }

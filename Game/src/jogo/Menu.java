@@ -22,15 +22,13 @@ public class Menu extends Thread {
         backGround = new Sprite(Utilities.getImgCenario("menu\\menu.png"), 4);
         keyboard = Game.janela.getKeyboard();
 
-        keyboard.setBehavior(Keyboard.UP_KEY,   Keyboard.DETECT_INITIAL_PRESS_ONLY);
-        keyboard.setBehavior(Keyboard.DOWN_KEY, Keyboard.DETECT_INITIAL_PRESS_ONLY);
+        keyboard.setBehavior(Game.W,   Keyboard.DETECT_INITIAL_PRESS_ONLY);
+        keyboard.setBehavior(Game.S, Keyboard.DETECT_INITIAL_PRESS_ONLY);
     }
 
     public void run(){
 
-
         this.printar();
-
     }
 
     private void verificaOpcao(){
@@ -38,7 +36,7 @@ public class Menu extends Thread {
         Sound efeito = new Sound(Utilities.getFileAudio("menu_efeito.wav"));
         efeito.setVolume(0.0001f);
 
-        if(keyboard.keyDown(Keyboard.UP_KEY)){
+        if(keyboard.keyDown(Game.W)){
             if(opcaoEscolhida == 0){
                 this.opcaoEscolhida = 3;
             }
@@ -49,7 +47,7 @@ public class Menu extends Thread {
 //            efeito.play();
 
         }
-        else if (keyboard.keyDown(Keyboard.DOWN_KEY)) {
+        else if (keyboard.keyDown(Game.S)) {
 
             if(opcaoEscolhida == 3){
                 opcaoEscolhida = 0;
