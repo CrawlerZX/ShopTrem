@@ -1,10 +1,13 @@
 package jogo;
 
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import jogo.DAO.ConfigDAL;
 import jogo.DAO.ConfigModel;
+import jogo.DAO.FaseDAL;
+import jogo.DAO.FaseModel;
 import jplay.*;
 import jplay.Window;
 
@@ -41,6 +44,7 @@ public class Game {
         Intro intro = new Intro(janela);
         intro.start();
         intro.join();
+
 
 //        musicaMenu.play();
         menu.start();
@@ -135,75 +139,76 @@ public class Game {
         return Game.target;
     }
 
-    public static void carregaFase(){
+    public static void carregaFase() throws SQLException {
 
-        ArrayList<Cenario> listCenarios = new ArrayList<>();
-
-//        Sprite motor1 = new Sprite(Utilities.getImgCenario("Fase 1\\Motor 1.png"));
-
-//        Sprite trilho1 = new Sprite(Utilities.getImgCenario("Fase 1\\Trilho 1.png"));
-
-//        Sprite chao1 = new Sprite(Utilities.getImgCenario("Fase 1\\Chao 1.png"));
-
-        Sprite trem6 = new Sprite(Utilities.getImgCenario("fase1\\trem1.png"));
-
-        Sprite parede_ex1 = new Sprite(Utilities.getImgCenario("fase1\\frente1.png"));
-
-        Cenario cenario = new Cenario(trem6, parede_ex1);
-        listCenarios.add(cenario);
-
-//        Sprite motor2 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 2\\Motor 2.png"));
+//        ArrayList<Cenario> listCenarios = new ArrayList<>();
 //
-//        Sprite trilho2 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 2\\Trilho 2.png"));
+////        Sprite motor1 = new Sprite(Utilities.getImgCenario("Fase 1\\Motor 1.png"));
 //
-//        Sprite chao2 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 2\\Chao 2.png"));
-
-        Sprite trem2 = new Sprite(Utilities.getImgCenario("fase1\\trem2.png"));
-
-        Sprite parede_ex2 = new Sprite(Utilities.getImgCenario("fase1\\frente2.png"));
-
-        Cenario cenario2 = new Cenario(trem2, parede_ex2);
-        listCenarios.add(cenario2);
-
-//        Sprite motor3 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 3\\Motor 3.png"));
+////        Sprite trilho1 = new Sprite(Utilities.getImgCenario("Fase 1\\Trilho 1.png"));
 //
-//        Sprite trilho3 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 3\\Trilho 3.png"));
+////        Sprite chao1 = new Sprite(Utilities.getImgCenario("Fase 1\\Chao 1.png"));
 //
-//        Sprite chao3 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 3\\Chao 3.png"));
-
-        Sprite trem3 = new Sprite(Utilities.getImgCenario("fase1\\trem3.png"));
-
-        Sprite parede_ex3 = new Sprite(Utilities.getImgCenario("fase1\\frente3.png"));
-
-        Cenario cenario3 = new Cenario(trem3, parede_ex3);
-        listCenarios.add(cenario3);
-
-//        Sprite motor4 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 4\\Motor 4.png"));
+//        Sprite trem6 = new Sprite(Utilities.getImgCenario("fase1\\trem1.png"));
 //
-//        Sprite trilho4 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 4\\Trilho 4.png"));
+//        Sprite parede_ex1 = new Sprite(Utilities.getImgCenario("fase1\\frente1.png"));
 //
-//        Sprite chao4 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 4\\Chao 4.png"));
-
-        Sprite trem4 = new Sprite(Utilities.getImgCenario("fase1\\trem4.png"));
-
-        Sprite parede_ex4 = new Sprite(Utilities.getImgCenario("fase1\\frente4.png"));
-
-        Cenario cenario4 = new Cenario(trem4, parede_ex4);
-        listCenarios.add(cenario4);
-
-//        Sprite motor5 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 5\\Motor 5.png"));
+//        Cenario cenario = new Cenario(trem6, parede_ex1);
+//        listCenarios.add(cenario);
 //
-//        Sprite trilho5 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 5\\Trilho 5.png"));
+////        Sprite motor2 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 2\\Motor 2.png"));
+////
+////        Sprite trilho2 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 2\\Trilho 2.png"));
+////
+////        Sprite chao2 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 2\\Chao 2.png"));
 //
-//        Sprite chao5 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 5\\Chao 5.png"));
+//        Sprite trem2 = new Sprite(Utilities.getImgCenario("fase1\\trem2.png"));
+//
+//        Sprite parede_ex2 = new Sprite(Utilities.getImgCenario("fase1\\frente2.png"));
+//
+//        Cenario cenario2 = new Cenario(trem2, parede_ex2);
+//        listCenarios.add(cenario2);
+//
+////        Sprite motor3 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 3\\Motor 3.png"));
+////
+////        Sprite trilho3 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 3\\Trilho 3.png"));
+////
+////        Sprite chao3 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 3\\Chao 3.png"));
+//
+//        Sprite trem3 = new Sprite(Utilities.getImgCenario("fase1\\trem3.png"));
+//
+//        Sprite parede_ex3 = new Sprite(Utilities.getImgCenario("fase1\\frente3.png"));
+//
+//        Cenario cenario3 = new Cenario(trem3, parede_ex3);
+//        listCenarios.add(cenario3);
+//
+////        Sprite motor4 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 4\\Motor 4.png"));
+////
+////        Sprite trilho4 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 4\\Trilho 4.png"));
+////
+////        Sprite chao4 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 4\\Chao 4.png"));
+//
+//        Sprite trem4 = new Sprite(Utilities.getImgCenario("fase1\\trem4.png"));
+//
+//        Sprite parede_ex4 = new Sprite(Utilities.getImgCenario("fase1\\frente4.png"));
+//
+//        Cenario cenario4 = new Cenario(trem4, parede_ex4);
+//        listCenarios.add(cenario4);
+//
+////        Sprite motor5 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 5\\Motor 5.png"));
+////
+////        Sprite trilho5 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 5\\Trilho 5.png"));
+////
+////        Sprite chao5 = new Sprite(Utilities.getImgCenario("Fase 1\\Fase 5\\Chao 5.png"));
+//
+//        Sprite trem5 = new Sprite(Utilities.getImgCenario("fase1\\trem5.png"));
+//
+//        Sprite parede_ex5 = new Sprite(Utilities.getImgCenario("fase1\\frente5.png"));
+//
+//        Cenario cenario5 = new Cenario(trem5, parede_ex5);
+//        listCenarios.add(cenario5);
 
-        Sprite trem5 = new Sprite(Utilities.getImgCenario("fase1\\trem5.png"));
-
-        Sprite parede_ex5 = new Sprite(Utilities.getImgCenario("fase1\\frente5.png"));
-
-        Cenario cenario5 = new Cenario(trem5, parede_ex5);
-        listCenarios.add(cenario5);
-
-        fase = new Fase(listCenarios);
+        FaseModel obj = FaseDAL.getFase();
+        fase = new Fase(obj.getNome(), obj.listCenario);
     }
 }

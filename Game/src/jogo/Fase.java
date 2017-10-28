@@ -1,26 +1,25 @@
 package jogo;
 
+import jogo.DAO.CenarioModel;
+
 import java.util.ArrayList;
 
 public class Fase {
 
-    private ArrayList<Cenario> cenarios;
+    private ArrayList<CenarioModel> cenarios;
     public int atual;
+    public String nome;
 
-    public Fase( ArrayList<Cenario> cenarios){
+    public Fase(String nome, ArrayList<CenarioModel> cenarios){
 
         this.cenarios = cenarios;
         this.atual = 0;
+        this.nome = nome;
     }
 
     public void draw() {
 
-        Cenario cena = cenarios.get(atual);
-
-//        cena.trilho.draw();
-//        cena.motor.draw();
-//        cena.chao.draw();
-//        cena.parede_in.draw();
+        CenarioModel cena = cenarios.get(atual);
 
         cena.trem.draw();
         Game.cliente.draw();
