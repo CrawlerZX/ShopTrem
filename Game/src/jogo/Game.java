@@ -41,10 +41,9 @@ public class Game {
         ApplyConfig();
         carregaFase();
 
-        Intro intro = new Intro(janela);
-        intro.start();
-        intro.join();
-
+//        Intro intro = new Intro(janela);
+//        intro.start();
+//        intro.join();
 
 //        musicaMenu.play();
         menu.start();
@@ -55,16 +54,21 @@ public class Game {
         Parallax tst = new Parallax();
         tst.add(Utilities.getImgCenario("fase1\\poste.png"));
 
+        Sprite numeros = new Sprite(Utilities.getImgSprite("numeros\\numeros.png"), 9);
+        numeros.setLoop(false);
+        numeros.setCurrFrame(0);
+
         while(true) {
 
             parallax.drawLayers();
             parallax.repeatLayers(janela.getWidth(), janela.getHeight(), true);
-            parallax.setVelLayerX(20, parallax.getLayer(0));
-            parallax.setVelLayerX(20, parallax.getLayer(1));
+            parallax.setVelLayerX(10, parallax.getLayer(0));
+            parallax.setVelLayerX(10, parallax.getLayer(1));
             parallax.moveLayersStandardX(true);
 
             cliente.update();
             fase.draw();
+            numeros.draw();
 
             tst.drawLayers();
             tst.repeatLayers(janela.getWidth(), janela.getHeight(), true);
@@ -76,11 +80,14 @@ public class Game {
                 th.start();
             }
 
-//            if(!guarda.getIsThreadRun()) {
-//                Thread th = new Thread(guarda);
-//                th.start();
-//            }
+            if(!guarda.getIsThreadRun()){
+                Thread th = new Thread(guarda);
+                th.start();
+            }
 
+            if (person.collided(Game.cliente)){
+                numeros.setCurrFrame(1);
+            }
 
             if(teclado.keyDown(Keyboard.ENTER_KEY)) {
                 System.exit(1000);
@@ -93,6 +100,7 @@ public class Game {
     private static void ApplyConfig() {
 
         Game.person = new Personagem(config.getPerson_dir_img(), config.getPerson_num_frame(), config.getPerson_vel());
+//        Game.person = new Personagem(Utilities.getImgSprite("teste\\guarda_andando2.png"), 8, 3.5);
         Game.guarda = new Guarda(config.getGuarda_dir_img(), config.getGuarda_num_frame(), config.getGuarda_vel());
 
         Game.janela = new Window(config.getGame_janela_w(), config.getGame_janela_h());

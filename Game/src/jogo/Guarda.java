@@ -11,6 +11,7 @@ public class Guarda extends ObjectGame implements Runnable {
     private Personagem target;
     private boolean targetIsTrigered;
     public boolean isRun = false;
+    public boolean isHide;
 
     public Guarda(String fileName, int numFrames, double velocidade) {
         super(fileName, numFrames, velocidade);
@@ -26,6 +27,8 @@ public class Guarda extends ObjectGame implements Runnable {
 
         this.setTotalDuration(Game.config.getGuarda_anim_duration());
         this.setSequence(0, 3);
+
+        this.isHide = true;
     }
 
     @Override
@@ -62,7 +65,7 @@ public class Guarda extends ObjectGame implements Runnable {
 
     public void WantedTarget() {
         try {
-            while(this.targetIsTrigered) {
+            while(this.targetIsTrigered && !this.isHide) {
                 if(Game.getPositionTarget().x > this.x) {
                     this.x += this.getVelocidade();
                     this.setDirection(Position.RIGHT);
@@ -72,10 +75,10 @@ public class Guarda extends ObjectGame implements Runnable {
                     this.setDirection(Position.LEFT);
                 }
                 else if (Game.getPositionTarget().x == this.x){
-
-//                    this.stop();
+                    if (Game.getPositionTarget().y == this.y){
+                        System.exit(100);
+                    }
                 }
-
 //                if(Game.getPositionTarget().y > this.y) {
 //                    this.y += this.getVelocidade();
 //                }
@@ -97,8 +100,8 @@ public class Guarda extends ObjectGame implements Runnable {
         Point personLocation = Game.getPositionTarget();
         double distancia = personLocation.distance(this.x, this.y);
 
-//        System.out.println("Guarda: " + this.x + " " + this.y);
-//        System.out.println("Personagem: " + personLocation.x + " " + personLocation.y);
+        System.out.println("Guarda: " + this.x + " " + this.y);
+        System.out.println("Personagem: " + personLocation.x + " " + personLocation.y);
 
         //Olhando para a esquerda
         if (this.dirVision == 0){

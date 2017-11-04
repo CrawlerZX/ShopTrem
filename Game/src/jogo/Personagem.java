@@ -1,6 +1,7 @@
 package jogo;
 
 import jplay.Keyboard;
+import jplay.Sprite;
 
 import javax.swing.*;
 
@@ -23,7 +24,7 @@ public class Personagem extends ObjectGame implements Runnable {
         this.mochila = null;
         this.isHide = false;
         this.isFree = true;
-        this.setSequence(0, 3);
+        this.setSequence(0, 4);
 
         this.setTotalDuration(Game.config.getPerson_anim_duration());
 
@@ -90,10 +91,8 @@ public class Personagem extends ObjectGame implements Runnable {
                     this.update();
                 }
 
-
                 int cima = 320;
                 int meio = 330;
-                int baixo = 320;
 
                 if(Game.teclado.keyDown(Game.W)){
                     if (this.y >= meio){
@@ -105,6 +104,7 @@ public class Personagem extends ObjectGame implements Runnable {
                         this.y += 10;
                     }
                 }
+
 
                 Game.setPositionTarget(this.x, this.y);
                 Thread.currentThread().sleep(this.thsleep);
